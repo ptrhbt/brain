@@ -20,5 +20,5 @@ triangles = np.loadtxt(
 triangles_zero_offset = triangles - 1
 i, j, k = triangles_zero_offset.T
 
-face_colors_1 = ["red" if z[kk] > 40 else "yellow" for kk in k]
-face_colors_2 = ["red" if x[kk] > 40 else "yellow" for kk in k]
+vertexcolor_1 = ["red" if entry > 40 else "yellow" for entry in z]
+vertexcolor_2 = ["red" if entry > 40 else "yellow" for entry in x]

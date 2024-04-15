@@ -1,5 +1,5 @@
 from dash import Input, Output, no_update, Patch
-from colors import face_colors_1, face_colors_2
+from colors import vertexcolor_1, vertexcolor_2
 
 
 def create_callbacks(app):
@@ -11,14 +11,13 @@ def create_callbacks(app):
         prevent_initial_call=True,
     )
     def _change_color(n_intervals):
-        print(n_intervals)
         if not n_intervals:
             return no_update
 
         patched_figure = Patch()
 
-        colors = face_colors_1 if n_intervals % 2 else face_colors_2
+        colors = vertexcolor_1 if n_intervals % 2 else vertexcolor_2
 
-        patched_figure["data"][0]["facecolor"] = colors
+        patched_figure["data"][0]["vertexcolor"] = colors
 
         return patched_figure

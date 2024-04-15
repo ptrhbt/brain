@@ -2,7 +2,7 @@ import numpy as np
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
-from colors import x, y, z, i, j, k, face_colors_1
+from colors import x, y, z, i, j, k, vertexcolor_1
 
 fig = go.Figure(
     data=[
@@ -17,7 +17,7 @@ fig = go.Figure(
             name="",
             showscale=False,
             hoverinfo="none",
-            facecolor=face_colors_1,
+            vertexcolor=vertexcolor_1,
         )
     ],
     layout=go.Layout(autosize=True, height=800),
