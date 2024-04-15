@@ -1,51 +1,54 @@
+import numpy as np
 from dash import dcc, html
 import dash_bootstrap_components as dbc
-import dash_vtk
-import vtk
-from dash_vtk.utils import to_mesh_state
+import plotly.graph_objects as go
+from colors import x, y, z, i, j, k, face_colors_1
 
-# Load the OBJ file
-reader = vtk.vtkOBJReader()
-reader.SetFileName("./assets/brain2.obj")
-reader.Update()
-polydata = reader.GetOutput()
-mesh_state = to_mesh_state(polydata)
-
-
-# import pdb; pdb.set_trace()
+fig = go.Figure(
+    data=[
+        go.Mesh3d(
+            x=x,
+            y=y,
+            z=z,
+            i=i,
+            j=j,
+            k=k,
+            opacity=0.9,
+            name="",
+            showscale=False,
+            hoverinfo="none",
+            facecolor=face_colors_1,
+        )
+    ],
+    layout=go.Layout(autosize=True, height=800),
+)
 
 
 def create_layout():
     """Build layout"""
-    return dbc.Container([dbc.Row([plot_pane()])], fluid=True)
+    return dbc.Container(
+        [
+            dbc.Row(
+                [
+                    plot_pane(),
+                    dcc.Interval(
+                        id="trigger",
+                        interval= 0.2 * 1000,  # in milliseconds
+                        n_intervals=0,
+                    ),
+                ]
+            )
+        ],
+        fluid=True,
+    )
 
 
 def plot_pane():
     """Plot pane"""
     return html.Div(
-        dash_vtk.View(
-            id="vtk-view",
-            triggerRender=1.0,
-            children=[
-                dash_vtk.GeometryRepresentation(
-                    showCubeAxes=True,
-                    # cubeAxesStyle={
-                    #     "height": 2000,
-                    #     "startingHeight": 10,
-                    #     "width": 2000,
-                    #     },
-                    property={
-                        "edgeVisibility": False,
-                        # "VertexVisibility": True,
-                        "EdgeColor": [0.0, 0.0, 0.0],
-                        "VertexColor": [1.0, 1.0, 1.0],
-                        "Color": [0.2, 0.6, 0.7],
-                        "Opacity": 0.5,
-                    },
-                    children=[dash_vtk.Mesh(state=mesh_state)],
-                )
-            ],
-            style={"height": "100vh", "width": "100vw"}
+        dcc.Graph(
+            id="brain_graph",
+            figure=fig,
         ),
-        style={"height": "100%", "width": "100%"}
+        style={"height": "100vh", "width": "100vw"},
     )

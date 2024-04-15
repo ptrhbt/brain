@@ -1,0 +1,24 @@
+from dash import Input, Output, no_update, Patch
+from colors import face_colors_1, face_colors_2
+
+
+def create_callbacks(app):
+    """Create sidebar callbacks"""
+
+    @app.callback(
+        Output("brain_graph", "figure"),
+        Input("trigger", "n_intervals"),
+        prevent_initial_call=True,
+    )
+    def _change_color(n_intervals):
+        print(n_intervals)
+        if not n_intervals:
+            return no_update
+
+        patched_figure = Patch()
+
+        colors = face_colors_1 if n_intervals % 2 else face_colors_2
+
+        patched_figure["data"][0]["facecolor"] = colors
+
+        return patched_figure
