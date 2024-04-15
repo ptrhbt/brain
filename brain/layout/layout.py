@@ -33,7 +33,7 @@ def create_layout():
                     plot_pane(),
                     dcc.Interval(
                         id="trigger",
-                        interval= 0.2 * 1000,  # in milliseconds
+                        interval= 1 * 1000,  # in milliseconds
                         n_intervals=0,
                     ),
                 ]
