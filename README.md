@@ -1,5 +1,5 @@
 # brain
-Brain vizualisation demo
+Brain visualization demo
 
 ## How to run
 
